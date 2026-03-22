@@ -1,4 +1,6 @@
-# Assignment On Serverless Architecture & CLoud Architecture by using AWS Automation with Boto3 & Lambda
+# Assignment On Serverless Architecture & Cloud Automation by using AWS Boto3 & Lambda Functions
+
+## Introduction
 
 This repository contains Python scripts and AWS Lambda functions to automate various tasks on AWS using **Boto3**. It demonstrates how to manage EC2 instances, handle automated start/stop workflows, and perform other AWS automation tasks.
 
