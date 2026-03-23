@@ -48,57 +48,80 @@ Screenshot:
 ## Step 3: Lambda function Code
 
 ``` python
-import boto3
-import json
-from datetime import datetime
+import boto3                     # AWS SDK for Python to interact with AWS services
+import json                      # Used for formatting logs
+from datetime import datetime    # Used to get current date
 
-# Initialize the EC2 client outside the handler for better performance (TCP Warm Start)
+# Create EC2 client (initialized outside handler for better performance)
 ec2 = boto3.client('ec2')
 
 def lambda_handler(event, context):
-    # 1. Log the incoming event for debugging
-    print("Received event:", json.dumps(event))
+    """
+    This function is triggered by Amazon EventBridge when an EC2 instance changes state.
+    It tags the EC2 instance when it reaches the 'running' state.
+    """
+
+    # Log the full event for debugging (visible in CloudWatch Logs)
+    print("Received Event:")
+    print(json.dumps(event))
 
     try:
-        # 2. Extract Instance ID from the EventBridge structure
-        # Matches the 'EC2 Instance State-change Notification' format
-        instance_id = event.get('detail', {}).get('instance-id')
+        # Extract 'detail' section from the event
+        detail = event.get('detail', {})
 
+        # Get the instance ID (e.g., i-1234567890abcdef0)
+        instance_id = detail.get('instance-id')
+
+        # Get the current state of the instance (pending, running, stopping, etc.)
+        state = detail.get('state')
+
+        # Check if instance ID exists
         if not instance_id:
-            print("No Instance ID found in event. Exiting.")
-            return {
-                'statusCode': 400,
-                'body': 'Missing instance-id'
-            }
+            print("Error: No instance-id found in event")
+            return "Missing instance-id"
 
-        # 3. Define the Tags
+        # Only proceed if instance is in 'running' state
+        # This avoids tagging during other states like 'pending' or 'stopping'
+        if state != 'running':
+            print(f"Ignoring instance {instance_id} because state is '{state}'")
+            return f"Ignored state: {state}"
+
+        # Get current date in YYYY-MM-DD format
         today = datetime.utcnow().strftime('%Y-%m-%d')
+
+        # Define tags to apply
         tags = [
-            {'Key': 'LaunchDate', 'Value': today},
-            {'Key': 'HeroVired', 'Value': 'DevOps-Saima'},
-            {'Key': 'ManagedBy', 'Value': 'Lambda-Automation'}
+            {
+                'Key': 'LaunchDate',   # Tag key
+                'Value': today         # Current date as value
+            },
+            {
+                'Key': 'HeroVired',
+                'Value': 'DevOps-Saima'   # Custom tag (you can change this)
+            },
+            {
+                'Key': 'ManagedBy',
+                'Value': 'Lambda-Automation'  # Indicates automation
+            }
         ]
 
-        # 4. Apply Tags to the EC2 Instance
+        # Apply tags to the EC2 instance
         ec2.create_tags(
-            Resources=[instance_id],
-            Tags=tags
+            Resources=[instance_id],   # List of instance IDs
+            Tags=tags                  # Tags to apply
         )
 
-        success_msg = f"Successfully tagged instance {instance_id}"
-        print(success_msg)
-        
-        return {
-            'statusCode': 200,
-            'body': json.dumps(success_msg)
-        }
+        # Success log message
+        print(f"Successfully tagged EC2 instance: {instance_id}")
+
+        return f"Success: Instance {instance_id} tagged"
 
     except Exception as e:
-        print(f"Error: {str(e)}")
-        return {
-            'statusCode': 500,
-            'body': json.dumps(f"Internal Error: {str(e)}")
-        }
+        # Catch any unexpected errors
+        print(f"Error occurred: {str(e)}")
+        
+        # Raise error so it appears properly in CloudWatch Logs
+        raise
 ```
 
 Screenshot:
