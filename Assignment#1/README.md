@@ -20,8 +20,11 @@ Name: `instance-stop`
 |--------|------------|
 | Action | Auto-Stop |
 
-Screenshot: EC2 instance with Auto-Stop tag
+<br>
 
+**Screenshot: EC2 instance with `Auto-Stop` tag**
+
+<img width="1897" height="385" alt="image" src="https://github.com/user-attachments/assets/72fe3bdc-93bf-4c6b-8937-8927af72497a" />
 
 
 ------------------------------------------------------------------------
@@ -34,21 +37,35 @@ Name: `instance-start`
 |--------|------------|
 | Action | Auto-Start |
 
-Screenshot: EC2 instance with Auto-Start tag
+<br>
+
+**Screenshot: EC2 instance with` Auto-Start` tag**
+
+<img width="1895" height="431" alt="image" src="https://github.com/user-attachments/assets/88f1907b-5a42-4f31-b273-2519c9c9f7e6" />
+
+<img width="1892" height="606" alt="image" src="https://github.com/user-attachments/assets/1a490893-b605-4ee0-91c1-6bb8890dcb79" />
 
 
 ------------------------------------------------------------------------
 
 # Step 2: Create IAM Role for Lambda
 
-1.  Open IAM Dashboard
+1.  Open `IAM` Dashboard
 2.  Click Roles → Create Role
 3.  Choose Lambda
 4.  Add Permissions: `AmazonEC2FullAccess`
 
 Role Name: `LambdaEC2ManagerRole`
 
-Screenshot: IAM role with EC2 permissions
+<br>
+
+**Screenshot: IAM role with EC2 permissions**
+
+<img width="1890" height="797" alt="image" src="https://github.com/user-attachments/assets/a1193c21-7da7-43ef-9063-a7841a7eb4a9" />
+
+<img width="1906" height="826" alt="image" src="https://github.com/user-attachments/assets/1fe7f3c1-0696-4cbe-b1c7-f063e285ebcf" />
+
+<img width="1906" height="806" alt="image" src="https://github.com/user-attachments/assets/c1085c7a-92af-4418-a7d0-2b0868f64fc7" />
 
 ------------------------------------------------------------------------
 
@@ -58,13 +75,19 @@ Screenshot: IAM role with EC2 permissions
 2.  Click Create Function
 3.  Choose Author From Scratch
 
-Settings:
+**Settings:**
 
-Function Name: ec2-auto-manager\
-Runtime: Python 3.x\
-Execution Role: LambdaEC2ManagerRole
+Function Name: `ec2-auto-manager`\
+Runtime: `Python 3.x`\
+Execution Role: `LambdaEC2ManagerRole`
 
-Screenshot: Lambda function creation page
+<br>
+
+**Screenshot: Lambda function creation page**
+
+<img width="1797" height="776" alt="image" src="https://github.com/user-attachments/assets/bceac791-d561-4294-af2f-ab02395eadbb" />
+
+<img width="1888" height="713" alt="image" src="https://github.com/user-attachments/assets/a131686b-035f-4061-b902-f6bf7d50c97a" />
 
 ------------------------------------------------------------------------
 
@@ -133,8 +156,12 @@ def lambda_handler(event, context):
         'started_instances': start_ids
     }
 ```
+<br>
 
-Screenshot: Lambda Code Editor
+**Screenshot: Lambda Code Editor**
+
+<img width="1617" height="910" alt="image" src="https://github.com/user-attachments/assets/cd38dccc-272a-49c9-ad80-153b047c0758" />
+
 
 ------------------------------------------------------------------------
 
@@ -146,8 +173,12 @@ Screenshot: Lambda Code Editor
 4. Invoke
 
 Event Name: `test`
+<br>
 
-Screenshot: Lambda test execution
+**Screenshot: Lambda test execution**
+
+<img width="1887" height="762" alt="image" src="https://github.com/user-attachments/assets/4936dabb-4d0c-4656-b579-6aeba9b4e6c4" />
+
 
 ------------------------------------------------------------------------
 
@@ -162,10 +193,11 @@ Expected Results:
 | instance-stop  | Auto-Stop  | Stopped   |
 | instance-start | Auto-Start | Running   |
 
+<br>
 
- 
-Screenshot: EC2 instances state after Lambda execution
+**Screenshot: EC2 instances state after Lambda execution**
 
+<img width="1912" height="625" alt="image" src="https://github.com/user-attachments/assets/eed9572f-cbbf-4832-ab0f-85576f8ed822" />
 
 ------------------------------------------------------------------------
 
@@ -174,9 +206,54 @@ Screenshot: EC2 instances state after Lambda execution
 ## Case 1
 **Scenario:**
 
-Initial state:
+**Initial state:**
 
-instance-stop = Stopped
+instance-stop = Stopped <br>
+instance-start = Stopped
+
+**Result:**
+
+instance-stop = Stopped <br>
+instance-start = Running
+
+**Screenshot: EC2 instances state before & after Lambda execution**
+
+<img width="1896" height="502" alt="image" src="https://github.com/user-attachments/assets/220b87f3-c78c-4753-95f1-61b4735031f4" />
+
+<img width="1913" height="842" alt="image" src="https://github.com/user-attachments/assets/d356024b-19b1-488e-a7d7-29e30de01897" />
+
+<img width="1912" height="625" alt="image" src="https://github.com/user-attachments/assets/c4e8351b-0e7f-4934-9077-21d60dae615f" />
+
+------------------------------------------------------------------------
+
+## Case 2
+**Scenario:**
+
+**Initial state:**
+
+instance-stop = Running <br>
+instance-start = Running
+
+**Result:**
+
+instance-stop = Stopped <br>
+instance-start = Running
+
+**Screenshot: EC2 instances state before & after Lambda execution**
+
+<img width="1918" height="632" alt="image" src="https://github.com/user-attachments/assets/b8e86b51-57ad-45b4-a181-7d8bdb4b326a" />
+<img width="1847" height="801" alt="image" src="https://github.com/user-attachments/assets/fdb2c690-c97f-43ae-99a1-9a7b84305f6c" />
+<img width="1913" height="617" alt="image" src="https://github.com/user-attachments/assets/5b824b57-e9e7-4cf8-ab00-ec62762327fe" />
+
+
+------------------------------------------------------------------------
+
+## Case 3
+**Scenario:**
+
+**Initial state:**
+
+instance-stop = Running
 instance-start = Stopped
 
 **Result:**
@@ -184,41 +261,14 @@ instance-start = Stopped
 instance-stop = Stopped
 instance-start = Running
 
-Screenshot: EC2 instances state before & after Lambda execution
+**Screenshot: EC2 instances state before & after Lambda execution**
 
-------------------------------------------------------------------------
+<img width="1918" height="592" alt="image" src="https://github.com/user-attachments/assets/61a9f4f9-b16c-429a-9a7a-bc8fea50489f" />
 
-## Case 2
-**Scenario:**
+<img width="1886" height="852" alt="image" src="https://github.com/user-attachments/assets/a02a8d5c-ceec-412c-8d76-fd55e45bcdea" />
 
-Initial state:
+<img width="1918" height="707" alt="image" src="https://github.com/user-attachments/assets/d200d089-294d-4019-b0fd-2cea9b1d7f04" />
 
-instance-stop = Running
-instance-start = Running
-
-Result:
-
-instance-stop = Stopped
-instance-start = Running
-
-Screenshot: EC2 instances state before & after Lambda execution
-
-------------------------------------------------------------------------
-
-## Case 3
-**Scenario:**
-
-Initial state:
-
-instance-stop = Running
-instance-start = Stopped
-
-Result:
-
-instance-stop = Stopped
-instance-start = Running
-
-Screenshot: EC2 instances state before & after Lambda execution
 
 ------------------------------------------------------------------------
 
@@ -227,7 +277,7 @@ Screenshot: EC2 instances state before & after Lambda execution
 This project demonstrates how AWS Lambda and Boto3 can automatically
 manage EC2 instances based on tags.
 
-This is an automation approach helps automate infrastructure management and reduce manual
-work in aws cloud environment.
+This is an automation approach that helps us to automate infrastructure management and reduce manual
+work in AWS cloud architecture.
 
 ------------------------------------------------------------------------
