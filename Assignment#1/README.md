@@ -155,14 +155,17 @@ Screenshot: Lambda test execution
 
 Open EC2 Dashboard and check instance states.
 
-Expected results:
+Expected Results:
 
-  Instance         Tag          Result
-  ---------------- ------------ ---------
-  instance-stop    Auto-Stop    Stopped
-  instance-start   Auto-Start   Running
+| Instance       |  Tag       |  Result   |
+|----------------|------------|-----------|
+| instance-stop  | Auto-Stop  | Stopped   |
+| instance-start | Auto-Start | Running   |
 
+
+ 
 Screenshot: EC2 instances state after Lambda execution
+
 
 ------------------------------------------------------------------------
 
