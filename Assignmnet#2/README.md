@@ -1,4 +1,4 @@
-# Assignment#5: Auto-Tagging EC2 Instances on Launch, Using AWS Boto3 & Lambda function
+# Task#5: Auto-Tagging EC2 Instances on Launch, Using AWS Boto3 & Lambda function
 
 ## Objective
 
