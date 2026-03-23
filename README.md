@@ -1,4 +1,4 @@
-# Assignment On Serverless Architecture & Cloud Automation by using AWS Boto3 & Lambda Functions
+# Assignments On Serverless Architecture & Cloud Automation by using AWS Boto3 & Lambda Functions
 
 ## Introduction
 
