@@ -16,11 +16,9 @@ EC2 instances based on tags using AWS Boto3 and Lambda function.
 
 Name: `instance-stop`
 
-Tag:
-
-  Key      Value
-  -------- -----------
-  Action   Auto-Stop
+| Key    | Value      |
+|--------|------------|
+| Action | Auto-Stop |
 
 Screenshot: EC2 instance with Auto-Stop tag
 
@@ -32,13 +30,12 @@ Screenshot: EC2 instance with Auto-Stop tag
 
 Name: `instance-start`
 
-Tag:
-
-  Key      Value
-  -------- ------------
-  Action   Auto-Start
+| Key    | Value      |
+|--------|------------|
+| Action | Auto-Start |
 
 Screenshot: EC2 instance with Auto-Start tag
+
 
 ------------------------------------------------------------------------
 
