@@ -23,7 +23,7 @@ This repository contains Python scripts and AWS Lambda functions to automate var
 
  ------
 
-Author: Saima Usman
-Course: PPMCAD-15
+Author: **Saima Usman** <br>
+Course: **PPMCAD-15**
 
 ------
