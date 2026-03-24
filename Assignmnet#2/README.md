@@ -1,4 +1,4 @@
-# Assignment #5: Auto-Tagging EC2 Instances on Launch, Using AWS Boto3 & Lambda function
+# Task#5: Auto-Tagging EC2 Instances on Launch, Using AWS Boto3 & Lambda function
 
 ## Objective
 
@@ -32,7 +32,9 @@ Trusted entity: `Lambda`
 
 Role Name: `LambdaEC2AutoTagRole`
 
-Screenshot:
+**Screenshot:**
+
+<img width="1897" height="865" alt="image" src="https://github.com/user-attachments/assets/ef89f444-36c9-4449-a68c-64577b5b7b2b" />
 
 ------------------------------------------------------------------------
 
@@ -41,11 +43,15 @@ Screenshot:
 Function Name: `auto-tagging-function`\
 Runtime: `Python 3.x`
 
-Screenshot:
+**Screenshot:**
+
+<img width="1883" height="860" alt="image" src="https://github.com/user-attachments/assets/d035db87-4757-4916-9ffe-304352b2c1fc" />
+
+<img width="1912" height="876" alt="image" src="https://github.com/user-attachments/assets/8559efff-20f8-4b12-bf80-005b380c02c6" />
 
 ------------------------------------------------------------------------
 
-## Step 3: Lambda function Code
+## Step 3: Create a Lambda function
 
 ``` python
 import boto3                     # AWS SDK for Python to interact with AWS services
@@ -124,43 +130,53 @@ def lambda_handler(event, context):
         raise
 ```
 
-Screenshot:
+**Screenshot:**
+
+<img width="1898" height="866" alt="image" src="https://github.com/user-attachments/assets/aeb1db04-6a1d-4998-a655-05a606493fd1" />
 
 ------------------------------------------------------------------------
 
 ## Step 4: Create EventBridge Rule
 
-### Step 1: Open EventBridge
+### 1: Open EventBridge
 
 1. Go to AWS Console
 2. In the search bar, type EventBridge
 3. Click Amazon EventBridge
 
+**Screenshot:**
+
+<img width="517" height="523" alt="image" src="https://github.com/user-attachments/assets/9617a7a4-d862-4f68-8e55-f72ca375007f" />
+
 ------------------------------------------------------------------------
 
-### Step 2: Go to Rules
+### 2: Go to Rules
 
 1. On the left sidebar → click Rules
 2. Click Create rule
 
 ------------------------------------------------------------------------
 
-### Step 3: Configure & Define Rule Details
+### 3: Configure & Define Rule Details
 
 Fill in:
 
-- Rule Name: `EC2-Auto-Tagging-Rule`
+- Rule Name: `EC2AutoTaggingRule`
 - Description: `Trigger Lambda when EC2 starts`
 - Event bus: `Default` (leave as is)
 
 - Rule type:
 Select `Rule with an event pattern` > `Next`
 
+**Screenshot:**
+
+<img width="1897" height="870" alt="image" src="https://github.com/user-attachments/assets/0170b8f3-f0d9-4e11-a866-c6bd3f383dc0" />
+
 ------------------------------------------------------------------------
 
-### Step 4: Build Event Pattern
+### 4: Build Event Pattern
 
-Now choose:
+**Now choose:**
 
 - Event source: `AWS events`
 - Service provider: `AWS`
@@ -168,12 +184,12 @@ Now choose:
 - Event type: `EC2 Instance State-change Notification`
 
 <br>
-Now Choose Pattern Method
+**Now Choose Pattern Method**
 
 Select:
 
 - Use custom pattern (JSON editor)
-
+``` json
 {
   "source": ["aws.ec2"],
   "detail-type": ["EC2 Instance State-change Notification"],
@@ -181,10 +197,15 @@ Select:
     "state": ["running"]
   }
 }
+```
+
+**Screenshot:**
+
+<img width="1898" height="850" alt="image" src="https://github.com/user-attachments/assets/4dedc133-6cc3-4cfe-a1d4-f186093312b0" />
  
 ------------------------------------------------------------------------
 
-### Step 5: Select Target
+### 5: Select Target
 
 Now you connect it to the Lambda function:
 
@@ -197,15 +218,22 @@ Now you connect it to the Lambda function:
 
 `Next`
 
+**Screenshots:**
+
+<img width="1888" height="852" alt="image" src="https://github.com/user-attachments/assets/a3c8294e-81a8-46e0-b68a-67e0affadde1" />
+
+<img width="1186" height="502" alt="image" src="https://github.com/user-attachments/assets/55dab72f-d17f-458c-8274-4128791242e4" />
+
 ------------------------------------------------------------------------
 
-### Step 6: Review & Create
+### 6: Review & Create
 
 - Check everything
 - Click Create rule
 
-Screenshots:
+**Screenshot:**
 
+<img width="1917" height="877" alt="image" src="https://github.com/user-attachments/assets/5c9128ae-0264-4c61-b4c1-d2cf04dec22d" />
 
 ------------------------------------------------------------------------
 
@@ -217,17 +245,7 @@ Screenshots:
 4. It triggers Lambda
 5. Lambda tags the instance
 
-Event: `EC2 → State change → running`
-
-Screenshot:
-
-------------------------------------------------------------------------
-
-## Step 5: Add Target
-
-Lambda: ec2-auto-tag
-
-Screenshot:
+**Event: `EC2 → State change → running`**
 
 ------------------------------------------------------------------------
 
@@ -235,7 +253,11 @@ Screenshot:
 
 Launch EC2 instance
 
-Screenshot:
+**Screenshot:**
+
+<img width="1892" height="867" alt="image" src="https://github.com/user-attachments/assets/0b5d6a9a-85ba-4ca8-a3ba-726a11deded5" />
+
+<img width="1886" height="820" alt="image" src="https://github.com/user-attachments/assets/986ac180-ef4e-41fe-82ed-483f4204b7d0" />
 
 ------------------------------------------------------------------------
 
@@ -247,7 +269,10 @@ LaunchDate → Date\
 HeroVired → DevOps-Saima\
 ManagedBy → Lambda-Automation
 
-Screenshot:
+**Screenshot:**
+
+<img width="841" height="337" alt="image" src="https://github.com/user-attachments/assets/136181ec-6a3f-4afa-b88c-62c76109d500" />
+
 
 ------------------------------------------------------------------------
 
@@ -264,9 +289,9 @@ Expected Logs:
     END RequestId: xxxx
     REPORT RequestId: xxxx Duration: 120 ms
 
-Screenshots:
+**Screenshot:**
 
-
+<img width="1896" height="863" alt="image" src="https://github.com/user-attachments/assets/981b6d02-d9e4-4460-ac75-9c027f526187" />
 
 ------------------------------------------------------------------------
 
@@ -274,10 +299,9 @@ Screenshots:
 
 With the help of Lambda function, I have built an automated system using:
 
-- Amazon EC2 → launches instances
+- Amazon EC2 → launches instance
 - Amazon CloudWatch → detects launch
 - AWS Lambda → runs code
 - Boto3 → applies tags
-
 
 ------------------------------------------------------------------------

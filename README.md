@@ -8,7 +8,9 @@ This repository contains Python scripts and AWS Lambda functions to automate var
 
 - **EC2 Automation**  
   - Start and stop EC2 instances based on tags (`Auto-Start` / `Auto-Stop`)  
-  - Automatic logging of affected instances  
+  - Automatic Tagging of instances
+  - Automated S3 Bucket Cleanup
+  - Monitor and Alert High AWS Billing 
 
 - **Lambda Integration**  
   - Run scripts as Lambda functions  
