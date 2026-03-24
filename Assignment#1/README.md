@@ -9,7 +9,7 @@ EC2 instances based on tags using AWS Boto3 and Lambda function.
 
 # Step 1: Create EC2 Instances
 
-1.  Open theAWS Console → EC2 Dashboard
+1.  Open AWS Console → EC2 Dashboard
 2.  Launch two instances (t2.micro).
 
 ### Instance #1
