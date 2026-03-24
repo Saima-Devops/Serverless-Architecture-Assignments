@@ -20,46 +20,55 @@ The Lambda function should be able to perform the following tasks:
 
 ## Step 1: EBS Volume Setup
 
-Create a New EBS volume
+Created a New EBS volume
 
-1. Open EC2 Dashboard
-2. Elastic Block Store → Volumes
-3. Create Volume
-4. Configure Volume
+1. Opened **EC2** Dashboard
+2. Elastic Block Store → **Volumes**
+3. Created **Volume**
+4. Configured Volume
     - ✔️ Volume Type
-         Choose:
+         Chosen:
          gp3 (General Purpose SSD) → recommended
 
     - ✔️ Size
-         Choose: 10 GiB (eg.)
+         Chosen: 100 GiB (as eg.)
 
     - ✔️ Availability Zone
-         Must match your EC2 instance's availability zone.
+         Must match the EC2 instance's availability zone.
 
     - ✔️ Snapshot (Optional)
-        Leave empty (for fresh volume)   
+        Left empty (for fresh volume)   
 
     - ✔️ Encryption
-         Leave default (or enable if required)  
+         Left default (or enable if required)  
 
-5. Add Tag
+5. Added Tag
+    - Before creation, expanded **Tags**:
+    - Clicked `Add tag` and entered:
+    ```bash
+    Key: Backup 
+    Value: True
+    ```
 
-Before creating, expand Tags:
-
-Click `Add tag` and enter:
-
-```bash
-Key: Backup 
-Value: True
-```
-
-> This is what the Lambda function will use!
-
-6. Click `Create volume`
+> This is what my Lambda function will use!
 
 <br>
 
-Screenshot:
+6. Clicked `Create volume`
+
+<br>
+
+**Screenshots:**
+<br>
+**EBS Volume Created**
+
+<img width="1917" height="867" alt="image" src="https://github.com/user-attachments/assets/039050a1-ca90-46a5-a6d6-740b1e116ec1" />
+
+
+<img width="1905" height="373" alt="image" src="https://github.com/user-attachments/assets/3652d51a-4e79-4050-b631-70bd18a133bf" />
+
+
+<img width="1918" height="977" alt="image" src="https://github.com/user-attachments/assets/bffda256-1fe8-449c-9fcf-164e9f36961a" />
 
 ---
 
@@ -68,11 +77,13 @@ Screenshot:
 - Attached policy: `AmazonEC2FullAccess`
 - Attached policy: `CloudWatchFullAccess`
 
-Screenshot:
+**Screenshot:**
+
+<img width="1895" height="872" alt="image" src="https://github.com/user-attachments/assets/7b3a70e9-3804-4a7e-8b5e-46a1e9dfab76" />
 
 ---
 
-## Step 3: Lambda Function
+## Step 3: Lambda Function Code
 
 ```python
 import boto3
@@ -145,25 +156,38 @@ def lambda_handler(event, context):
 
 <br>
 
-Screenshot:
+**Screenshots:**
+
+<img width="1900" height="708" alt="image" src="https://github.com/user-attachments/assets/30b8d051-0b97-404a-b26e-e84cd5597faf" />
+
+<img width="1918" height="860" alt="image" src="https://github.com/user-attachments/assets/bf395598-241e-4792-9add-ed85ed1095a6" />
+
 
 ---
 
 ## Step 4: EventBridge Scheduling
 
-Create EventBridge Schedule
+Created **EventBridge Schedule**
 
-    - open EventBridge
-    - Go to Scheduler - `Scheduler → Schedules`
-    - Configure Basic Details
+    - opened EventBridge
+    - Clicked Scheduler - `Scheduler → Schedules`
+    - Configured Basic Details
         - ✔️ Name: `EBS-Backup-Schedule`
         - ✔️ Schedule Pattern = `rate(7 days)` 
         - ✔️ Flexible Time Window = `OFF` (Ensures exact execution time)
         - ✔️ Select Target: `Lambda function`
         - ✔️ Permissions: `Create new role` (AWS will automatically create the correct permissions)
-        - ✔️ Click `Create schedule`
+        - ✔️ Click `Create Schedule`
 
 > Lambda will now run automatically.
+
+<br>
+
+**Screenshots:**
+
+<img width="1906" height="848" alt="image" src="https://github.com/user-attachments/assets/486edfd6-4fa7-40d8-8556-bac33ea9c62b" />
+
+<img width="1915" height="871" alt="image" src="https://github.com/user-attachments/assets/444c5d47-a9dd-4f01-ae53-7f06bab7fe4f" />
 
 ---
 
@@ -189,24 +213,35 @@ if age > timedelta(minutes=2):
 rate(5 minutes)
 ```
 
-> Run the Lambda function and check the logs.
+> Ran the Lambda function and checked the logs.
+
+<br>
 
 ### Note: 
 
-After testing, ensure:
+After testing, I reverted the final changes back:
 
 `RETENTION_DAYS = 30`
 
 Schedule is set to `rate(7 days)`
 
-
+<br>
 
 ### Result:
 
 - Snapshot created automatically
-- Snapshot deleted within 2 minutes
+- Snapshot deleted within a minute
 
-Screenshot:
+
+<br>
+
+**Screenshots:**
+
+<img width="1907" height="982" alt="image" src="https://github.com/user-attachments/assets/756a709e-e0b6-4da5-9534-ccd72fe3f612" />
+
+<img width="1912" height="983" alt="image" src="https://github.com/user-attachments/assets/b85a42a1-bbec-4941-89bf-5e2653336d39" />
+
+<img width="1913" height="620" alt="image" src="https://github.com/user-attachments/assets/6c408ca1-770b-4299-9138-de16f8db0562" />
 
 ---
 
@@ -217,29 +252,42 @@ Created rule using schedule:
 rate(7 days)
 ```
 
-Screenshot:
+**Screenshot:**
+
+<img width="1915" height="871" alt="image" src="https://github.com/user-attachments/assets/ef622d4c-1b3f-4206-bd98-667a1004daf7" />
 
 ---
 
 ## Step 6: Monitoring CloudWatch Logs
 
-1.  Go to Lambda → Monitor
-2.  Click **View CloudWatch Logs**
-3.  Open latest log stream
+1.  Opened **Lambda → Monitor**
+2.  Clicked **View CloudWatch Logs**
+3.  Opened the latest **log stream**
 
-Expected Logs:
+**Expected Logs:**
+
+<img width="1887" height="867" alt="log stream" src="https://github.com/user-attachments/assets/7d2a8817-1735-43f3-9e2f-f3de933e44a0" />
+
+<img width="1917" height="911" alt="image" src="https://github.com/user-attachments/assets/7eb790ed-3feb-4e7e-820a-62de6c768b0c" />
+
+<img width="1918" height="880" alt="image" src="https://github.com/user-attachments/assets/621e3a3a-2dd4-414f-9c12-1a2293d879ce" />
 
 ---
 
 ## Step 7: Snapshot Verification
 
-Checked EC2 → Snapshots
+Checked `EC2 → Snapshots`
 
 
-Confirmed:
+<img width="1918" height="973" alt="image" src="https://github.com/user-attachments/assets/b8db837f-356c-4f23-8e87-401a905f26bd" />
 
-- New snapshot created
-- Old snapshots deleted
+<br>
+
+
+### Confirmed:
+
+- New snapshots are being created after 7 days (Weekly Backup)
+- Old snapshots will be deleted after 30 days (Monthly Cleanup)
 
 ---
 
