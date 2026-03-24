@@ -41,4 +41,4 @@ def lambda_handler(event, context):
         'deleted_files': deleted_files
     }
 
-print("Cleanup complete.")
+print("Cleanup Complete.")
