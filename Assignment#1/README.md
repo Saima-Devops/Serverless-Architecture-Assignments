@@ -18,7 +18,7 @@ Name: `instance-stop`
 
 | Key    | Value      |
 |--------|------------|
-| Action | Auto-Stop |
+| Action | Auto-Stop  |
 
 <br>
 
