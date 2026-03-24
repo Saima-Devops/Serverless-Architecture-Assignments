@@ -9,8 +9,9 @@ This repository contains Python scripts and AWS Lambda functions to automate var
 - **EC2 Automation**  
   - Start and stop EC2 instances based on tags (`Auto-Start` / `Auto-Stop`)  
   - Automatic Tagging of instances
-  - Automated S3 Bucket Cleanup
-  - Monitor and Alert High AWS Billing 
+  - Automatic logging of affected instances  
+  - Automated S3 Bucket Cleanup 
+  - EBS Snapshot and Cleanup
 
 - **Lambda Integration**  
   - Run scripts as Lambda functions  
@@ -19,3 +20,10 @@ This repository contains Python scripts and AWS Lambda functions to automate var
 - **Boto3 Usage**  
   - Uses Boto3 to interact with AWS services programmatically  
   - Examples of describing, starting, and stopping EC2 instances  
+
+ ------
+
+Author: Saima Usman
+Course: PPMCAD-15
+
+------

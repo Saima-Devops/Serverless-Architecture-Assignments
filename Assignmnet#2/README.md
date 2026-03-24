@@ -51,7 +51,7 @@ Runtime: `Python 3.x`
 
 ------------------------------------------------------------------------
 
-## Step 3: Create a Lambda function
+## Step 3: Lambda function Code
 
 ``` python
 import boto3                     # AWS SDK for Python to interact with AWS services
