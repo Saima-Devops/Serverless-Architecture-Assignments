@@ -1,4 +1,4 @@
-# Task#2: Automated S3 Bucket Cleanup Using AWS Lambda and Boto3
+# Task#2: Automated S3 Bucket Cleanup Using AWS Boto3 &  Lambda Functions
 
 ## Objective
 
